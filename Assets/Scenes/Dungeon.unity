@@ -1038,6 +1038,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MovementKeys
   cellSize: 6
+  wallLayer:
+    serializedVersion: 2
+    m_Bits: 0
+  rayHeight: 0.5
+  rayDistanceMultiplier: 0.6
+  audioSource: {fileID: 0}
+  wallHitSound: {fileID: 8300000, guid: d9e298da07158c7449a28b85036bed37, type: 3}
 --- !u!1 &1811397123
 GameObject:
   m_ObjectHideFlags: 0
