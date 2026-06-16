@@ -8,8 +8,7 @@ public class MovementKeys : MonoBehaviour
 
   [Header("Wall Detection")]
   public LayerMask wallLayer;
-  public float rayHeight = 0.5f;
-  public float rayDistanceMultiplier = 0.6f;
+  public float rayHeight = 1.5f;
 
   [Header("Wall Hit Sound")]
   public AudioSource audioSource;
@@ -23,47 +22,49 @@ public class MovementKeys : MonoBehaviour
 
   private void Update()
   {
-    Keyboard keyboard = Keyboard.current;
-    if (keyboard == null)
-      return;
+    if (Keyboard.current == null) return;
 
-    Vector3 moveDirection = Vector3.zero;
+    if (Keyboard.current.upArrowKey.wasPressedThisFrame)
+      TryMove(Vector3.forward);
 
-    if (keyboard.upArrowKey.wasPressedThisFrame)
-      moveDirection = Vector3.forward;
+    if (Keyboard.current.downArrowKey.wasPressedThisFrame)
+      TryMove(Vector3.back);
 
-    if (keyboard.downArrowKey.wasPressedThisFrame)
-      moveDirection = Vector3.back;
+    if (Keyboard.current.leftArrowKey.wasPressedThisFrame)
+      TryMove(Vector3.left);
 
-    if (keyboard.leftArrowKey.wasPressedThisFrame)
-      moveDirection = Vector3.left;
+    if (Keyboard.current.rightArrowKey.wasPressedThisFrame)
+      TryMove(Vector3.right);
 
-    if (keyboard.rightArrowKey.wasPressedThisFrame)
-      moveDirection = Vector3.right;
+    if (Keyboard.current.deleteKey.wasPressedThisFrame)
+      transform.Rotate(0f, -90f, 0f);
 
-    if (moveDirection != Vector3.zero)
-      TryMove(moveDirection);
+    if (Keyboard.current.pageDownKey.wasPressedThisFrame)
+      transform.Rotate(0f, 90f, 0f);
   }
 
   private void TryMove(Vector3 direction)
   {
-    Vector3 rayStart = transform.position + Vector3.up * rayHeight;
-    float checkDistance = cellSize * rayDistanceMultiplier;
+    Vector3 targetPosition = transform.position + direction * cellSize;
 
-    bool wallAhead = Physics.Raycast(
-        rayStart,
-        direction,
-        checkDistance,
+    Vector3 boxCenter = targetPosition + Vector3.up * rayHeight;
+    Vector3 boxHalfSize = new Vector3(0.45f, 1.0f, 0.45f);
+
+    bool wallAtTarget = Physics.CheckBox(
+        boxCenter,
+        boxHalfSize,
+        Quaternion.identity,
         wallLayer
     );
 
-    if (wallAhead)
+    if (wallAtTarget)
     {
+      Debug.Log("WALL DETECTED");
       PlayWallHitSound();
       return;
     }
 
-    transform.position += direction * cellSize;
+    transform.position = targetPosition;
   }
 
   private void PlayWallHitSound()
