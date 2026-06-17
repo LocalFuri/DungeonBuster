@@ -1051,6 +1051,7 @@ GameObject:
   - component: {fileID: 1393920212}
   - component: {fileID: 1393920213}
   - component: {fileID: 1393920214}
+  - component: {fileID: 1393920215}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -1190,6 +1191,20 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &1393920215
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1393920211}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 040e5bb8c42cf7f42ae7bd2f0a05aa8f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::EscapeToExit
+  audioSource: {fileID: 1393920214}
+  pop04: {fileID: 8300000, guid: 32116013f802b974384b4afbb26651dc, type: 3}
 --- !u!1 &1811397123
 GameObject:
   m_ObjectHideFlags: 0
